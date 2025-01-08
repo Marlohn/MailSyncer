@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{BF0CDAE4-0B5D-4F1B-A26B-5F94A2016228}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Domain", "Domain\MailSyncer.Domain\MailSyncer.Domain.csproj", "{46110EDB-494B-4DAE-93DA-5DAFCB03DD63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{C2FC1402-C456-49CA-8E39-35105A1B1A74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{123523B3-8FC8-4BC5-842C-648F4EBD9BAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Application", "Application\MailSyncer.Application\MailSyncer.Application.csproj", "{543F32B7-C36B-4B09-BB49-FCC612096C77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Infrastructure", "Infrastructure\MailSyncer.Infrastructure\MailSyncer.Infrastructure.csproj", "{43EAC179-27C4-4D18-9335-EC6F11F94BE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.IoC", "Infrastructure\MailSyncer.IoC\MailSyncer.IoC.csproj", "{54172808-3E5E-4354-8089-D13564E70F19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{227E79C4-88BD-496E-9C6D-6DC76C73F47A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.API", "Presentation\MailSyncer.API\MailSyncer.API.csproj", "{6BBD0864-8121-41A5-A1F4-EACCA3EE7D3E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{C22F4E1C-832B-4219-8289-718BC14B4872}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E9F5125B-63E7-4001-B459-6EFC78DA94DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Shared", "Shared\MailSyncer.Shared\MailSyncer.Shared.csproj", "{B5DE078D-4A8C-4C99-96B4-4BBD72398786}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Tests", "Tests\MailSyncer.Tests\MailSyncer.Tests.csproj", "{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46110EDB-494B-4DAE-93DA-5DAFCB03DD63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46110EDB-494B-4DAE-93DA-5DAFCB03DD63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46110EDB-494B-4DAE-93DA-5DAFCB03DD63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46110EDB-494B-4DAE-93DA-5DAFCB03DD63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{543F32B7-C36B-4B09-BB49-FCC612096C77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{543F32B7-C36B-4B09-BB49-FCC612096C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{543F32B7-C36B-4B09-BB49-FCC612096C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{543F32B7-C36B-4B09-BB49-FCC612096C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43EAC179-27C4-4D18-9335-EC6F11F94BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43EAC179-27C4-4D18-9335-EC6F11F94BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43EAC179-27C4-4D18-9335-EC6F11F94BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43EAC179-27C4-4D18-9335-EC6F11F94BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54172808-3E5E-4354-8089-D13564E70F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54172808-3E5E-4354-8089-D13564E70F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54172808-3E5E-4354-8089-D13564E70F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54172808-3E5E-4354-8089-D13564E70F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BBD0864-8121-41A5-A1F4-EACCA3EE7D3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BBD0864-8121-41A5-A1F4-EACCA3EE7D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BBD0864-8121-41A5-A1F4-EACCA3EE7D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BBD0864-8121-41A5-A1F4-EACCA3EE7D3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5DE078D-4A8C-4C99-96B4-4BBD72398786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5DE078D-4A8C-4C99-96B4-4BBD72398786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5DE078D-4A8C-4C99-96B4-4BBD72398786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5DE078D-4A8C-4C99-96B4-4BBD72398786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{46110EDB-494B-4DAE-93DA-5DAFCB03DD63} = {BF0CDAE4-0B5D-4F1B-A26B-5F94A2016228}
+		{543F32B7-C36B-4B09-BB49-FCC612096C77} = {C2FC1402-C456-49CA-8E39-35105A1B1A74}
+		{43EAC179-27C4-4D18-9335-EC6F11F94BE9} = {123523B3-8FC8-4BC5-842C-648F4EBD9BAA}
+		{54172808-3E5E-4354-8089-D13564E70F19} = {123523B3-8FC8-4BC5-842C-648F4EBD9BAA}
+		{6BBD0864-8121-41A5-A1F4-EACCA3EE7D3E} = {227E79C4-88BD-496E-9C6D-6DC76C73F47A}
+		{B5DE078D-4A8C-4C99-96B4-4BBD72398786} = {C22F4E1C-832B-4219-8289-718BC14B4872}
+		{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91} = {E9F5125B-63E7-4001-B459-6EFC78DA94DB}
+	EndGlobalSection
+EndGlobal
