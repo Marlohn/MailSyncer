@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Mailchimp\" />
+    <Folder Include="Repositories\MockApi\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Domain\MailSyncer.Domain\MailSyncer.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

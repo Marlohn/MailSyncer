@@ -1,3 +1,4 @@
+using MailSyncer.IoC;
 
 namespace MailSyncer.API
 {
@@ -8,6 +9,8 @@ namespace MailSyncer.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            builder.Services.AddDependencies();
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
