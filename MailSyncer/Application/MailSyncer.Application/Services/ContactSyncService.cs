@@ -19,10 +19,7 @@ namespace MailSyncer.Application.Services
         {
             var contacts = await _contactService.GetContactsAsync();
 
-            foreach (var contact in contacts)
-            {
-                await _mailService.AddContactAsync(contact.Email, contact.FirstName, contact.LastName);
-            }
+            await _mailService.AddContactsAsync(contacts);
         }
     }
 }

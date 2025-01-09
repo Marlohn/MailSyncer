@@ -1,7 +1,9 @@
-﻿namespace MailSyncer.Domain.Interfaces
+﻿using MailSyncer.Domain.Entities;
+
+namespace MailSyncer.Domain.Interfaces
 {
     public interface IMailService
     {
-        Task AddContactAsync(string email, string firstName, string lastName);
+        Task AddContactsAsync(IEnumerable<Contact> contacts);
     }
 }

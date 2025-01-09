@@ -1,4 +1,5 @@
-﻿using MailSyncer.Application.Interfaces;
+﻿using System.Net.Http.Headers;
+using MailSyncer.Application.Interfaces;
 using MailSyncer.Application.Services;
 using MailSyncer.Domain.Interfaces;
 using MailSyncer.Infrastructure.ExternalServices.ContactService;
@@ -18,9 +19,11 @@ namespace MailSyncer.IoC
                 //client.Timeout = TimeSpan.FromSeconds(30);
             });
 
-            services.AddHttpClient<IMailService, MailchimpMailService>(client =>
-            { 
-                //client.BaseAddress = new Uri("https://<mailchimp-api-endpoint>/");
+            services.AddHttpClient<IMailService, MailchimpService>(client =>
+            {
+                client.BaseAddress = new Uri("https://us8.api.mailchimp.com/3.0/");
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", "55c35dbdbe8a26cd71df9245ee3ad54b-us8");
                 //client.Timeout = TimeSpan.FromSeconds(30);
             });
 
