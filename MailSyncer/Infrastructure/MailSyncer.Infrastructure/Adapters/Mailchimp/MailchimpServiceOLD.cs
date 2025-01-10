@@ -2,16 +2,16 @@
 using System.Text.Json;
 using MailSyncer.Domain.Entities;
 using MailSyncer.Domain.Interfaces;
-using MailSyncer.Infrastructure.ExternalServices.MailService.Models;
+using MailSyncer.Infrastructure.Adapters.Mailchimp.Models;
 
-namespace MailSyncer.Infrastructure.ExternalServices.MailService
+namespace MailSyncer.Infrastructure.Adapters.Mailchimp
 {
-    public class MailchimpService : IMailService
+    public class MailchimpServiceOLD : IMailService
     {
         private readonly HttpClient _httpClient;
         private readonly string _defaultListName = "MARLOHN CHOINSKI";
 
-        public MailchimpService(HttpClient httpClient)
+        public MailchimpServiceOLD(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
@@ -38,7 +38,7 @@ namespace MailSyncer.Infrastructure.ExternalServices.MailService
             {
                 throw new Exception($"Error fetching lists: {response.StatusCode} - {response.ReasonPhrase}"); // maybe use jsonResponse
             }
-            
+
             var listResponse = JsonSerializer.Deserialize<ListResponse>(jsonResponse);
 
             if (listResponse?.Lists != null && listResponse.Lists.Count != 0)
@@ -50,7 +50,7 @@ namespace MailSyncer.Infrastructure.ExternalServices.MailService
                     return defaultList.Id;
                 }
             }
-            
+
             throw new Exception($"Default list not found.");
         }
 

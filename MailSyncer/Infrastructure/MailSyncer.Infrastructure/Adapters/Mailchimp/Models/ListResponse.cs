@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MailSyncer.Infrastructure.ExternalServices.MailService.Models
+namespace MailSyncer.Infrastructure.Adapters.Mailchimp.Models
 {
-    internal class ListResponse
+    public class ListResponse
     {
         [JsonPropertyName("lists")]
         public List<MailchimpList> Lists { get; set; }

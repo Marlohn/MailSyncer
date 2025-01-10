@@ -2,8 +2,9 @@
 using MailSyncer.Application.Interfaces;
 using MailSyncer.Application.Services;
 using MailSyncer.Domain.Interfaces;
-using MailSyncer.Infrastructure.ExternalServices.ContactService;
-using MailSyncer.Infrastructure.ExternalServices.MailService;
+using MailSyncer.Infrastructure.Adapters.Mailchimp;
+using MailSyncer.Infrastructure.Adapters.MockApi;
+using MailSyncer.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MailSyncer.IoC
@@ -12,23 +13,52 @@ namespace MailSyncer.IoC
     {
         public static IServiceCollection AddDependencies(this IServiceCollection services)
         {
-            // Infrastructure
-            services.AddHttpClient<IContactService, MockApiService>(client =>
+            services.AddApplication();
+            services.AddInfrastructure();
+            services.AddHttpClients();
+
+            return services;
+        }
+
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            services.AddScoped<IContactSyncService, ContactSyncService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+        {
+            services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IMailService, MailService>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddHttpClients(this IServiceCollection services)
+        {
+            services.AddHttpClient<IMockApiClient, MockApiClient>(client =>
             {
                 client.BaseAddress = new Uri("https://challenge.trio.dev/api/v1/");
                 //client.Timeout = TimeSpan.FromSeconds(30);
             });
 
-            services.AddHttpClient<IMailService, MailchimpService>(client =>
+            services.AddHttpClient<IMailchimpClient, MailchimpClient>(client =>
             {
                 client.BaseAddress = new Uri("https://us8.api.mailchimp.com/3.0/");
+                //client.Timeout = TimeSpan.FromSeconds(30);
                 client.DefaultRequestHeaders.Authorization =
                     new AuthenticationHeaderValue("Bearer", "55c35dbdbe8a26cd71df9245ee3ad54b-us8");
-                //client.Timeout = TimeSpan.FromSeconds(30);
             });
 
-            // Application
-            services.AddScoped<IContactSyncService, ContactSyncService>();
+
+            //services.AddHttpClient<IMailService, MailchimpService>(client =>
+            //{
+            //    client.BaseAddress = new Uri("https://us8.api.mailchimp.com/3.0/");
+            //    client.DefaultRequestHeaders.Authorization =
+            //        new AuthenticationHeaderValue("Bearer", "55c35dbdbe8a26cd71df9245ee3ad54b-us8");
+            //    //client.Timeout = TimeSpan.FromSeconds(30);
+            //});
 
             return services;
         }

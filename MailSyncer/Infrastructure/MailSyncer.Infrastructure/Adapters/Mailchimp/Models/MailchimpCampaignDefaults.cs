@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MailSyncer.Infrastructure.ExternalServices.MailService.Models
+namespace MailSyncer.Infrastructure.Adapters.Mailchimp.Models
 {
-    internal class MailchimpCampaignDefaults
+    public class MailchimpCampaignDefaults
     {
         [JsonPropertyName("from_email")]
         public string FromEmail { get; set; }
