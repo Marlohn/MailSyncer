@@ -1,9 +1,10 @@
 ﻿using MailSyncer.Domain.Entities;
+using MailSyncer.Infrastructure.HttpClients.Models;
 
 namespace MailSyncer.Infrastructure.Adapters.MockApi
 {
     public interface IMockApiClient
     {
-        Task<List<Contact>> GetContactsAsync();
+        Task<ResponseWrapper<List<Contact>>> GetContactsAsync();
     }
 }

@@ -15,7 +15,12 @@ namespace MailSyncer.Infrastructure.Services
 
         public async Task<IEnumerable<Contact>> GetContactsAsync()
         {
-            return await _mockApiClient.GetContactsAsync();
+            var response = await _mockApiClient.GetContactsAsync();
+
+            if (response.IsSuccessfulWithData)
+                return response.Data;
+
+            throw new InvalidOperationException(response.ErrorMessage);
         }
     }
 }

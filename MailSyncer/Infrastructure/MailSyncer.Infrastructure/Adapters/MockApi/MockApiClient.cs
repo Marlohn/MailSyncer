@@ -1,15 +1,16 @@
-﻿
-using MailSyncer.Domain.Entities;
+﻿using MailSyncer.Domain.Entities;
+using MailSyncer.Infrastructure.HttpClients;
+using MailSyncer.Infrastructure.HttpClients.Models;
 
 namespace MailSyncer.Infrastructure.Adapters.MockApi
 {
-    public class MockApiClient : BaseHttpClient, IMockApiClient
+    public class MockApiClient : HttpClientBase, IMockApiClient
     {
         public MockApiClient(HttpClient httpClient) : base(httpClient)
         {
         }
 
-        public async Task<List<Contact>> GetContactsAsync()
+        public async Task<ResponseWrapper<List<Contact>>> GetContactsAsync()
         {
             return await GetAsync<List<Contact>>("contacts");
         }

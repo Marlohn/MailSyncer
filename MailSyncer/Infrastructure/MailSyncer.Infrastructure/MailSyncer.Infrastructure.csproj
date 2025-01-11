@@ -14,4 +14,8 @@
     <ProjectReference Include="..\..\Domain\MailSyncer.Domain\MailSyncer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Adapters\Mailchimp\Responses\" />
+  </ItemGroup>
+
 </Project>

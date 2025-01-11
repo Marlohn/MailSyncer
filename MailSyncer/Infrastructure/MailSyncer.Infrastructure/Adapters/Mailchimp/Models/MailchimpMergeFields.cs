@@ -5,9 +5,9 @@ namespace MailSyncer.Infrastructure.Adapters.Mailchimp.Models
     public class MailchimpMergeFields
     {
         [JsonPropertyName("FNAME")]
-        public string FNAME { get; set; }
+        public string FName { get; set; }
 
         [JsonPropertyName("LNAME")]
-        public string LNAME { get; set; }
+        public string LName { get; set; }
     }
 }
