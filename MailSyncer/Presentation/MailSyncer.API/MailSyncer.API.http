@@ -1,17 +1,17 @@
 @MailSyncer.API_HostAddress = http://localhost:5200
 
 
-GET {{MailSyncer.API_HostAddress}}/api/contacts/sync
+POST {{MailSyncer.API_HostAddress}}/api/contacts/sync
 Accept: application/json
 
 ###
 
-GET {{MailSyncer.API_HostAddress}}/api/contacts/get
+GET {{MailSyncer.API_HostAddress}}/api/contacts
 Accept: application/json
 
 ###
 
-GET {{MailSyncer.API_HostAddress}}/api/contacts/clean
+DELETE {{MailSyncer.API_HostAddress}}/api/contacts
 Accept: application/json
 
 ###

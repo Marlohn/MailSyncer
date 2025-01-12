@@ -14,7 +14,7 @@ namespace MailSyncer.API.Controllers
             _contactSyncService = contactSyncService;
         }
 
-        [HttpGet("sync")]
+        [HttpPost("sync")]
         public async Task<IActionResult> SyncContacts()
         {
             var syncResponse = await _contactSyncService.SyncContactsAsync();
@@ -27,7 +27,7 @@ namespace MailSyncer.API.Controllers
             return Ok(syncResponse);
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<IActionResult> GetContacts()
         {
             var syncResponse = await _contactSyncService.GetContactsAsync();
@@ -40,7 +40,7 @@ namespace MailSyncer.API.Controllers
             return Ok(syncResponse);
         }
 
-        [HttpGet("clean")]
+        [HttpDelete]
         public async Task<IActionResult> CleanContacts()
         {
             var syncResponse = await _contactSyncService.CleanContactsAsync();
