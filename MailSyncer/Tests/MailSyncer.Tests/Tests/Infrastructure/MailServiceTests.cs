@@ -1,5 +1,6 @@
 ﻿using MailSyncer.Infrastructure.Adapters.Mailchimp;
 using MailSyncer.Infrastructure.Adapters.Mailchimp.Models;
+using MailSyncer.Infrastructure.Adapters.Mailchimp.Settings;
 using MailSyncer.Infrastructure.HttpClients.Models;
 using MailSyncer.Infrastructure.Services;
 using MailSyncer.UnitTests.Faker;
@@ -17,7 +18,13 @@ namespace MailSyncer.UnitTests.Tests.Infrastructure
         public MailServiceTests()
         {
             _mailchimpClientMock = new Mock<IMailchimpClient>();
-            _mailService = new MailService(_mailchimpClientMock.Object);
+            var mailchimpSettings = new MailchimpSettings
+            {
+                BaseUrl = "https://api.mailchimp.com",
+                ApiKey = "your-api-key",
+                DefaultListName = DefaultListName
+            };
+            _mailService = new MailService(_mailchimpClientMock.Object, mailchimpSettings);
         }
 
         [Fact]
