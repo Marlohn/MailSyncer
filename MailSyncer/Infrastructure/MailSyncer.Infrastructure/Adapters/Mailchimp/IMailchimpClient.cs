@@ -9,5 +9,6 @@ namespace MailSyncer.Infrastructure.Adapters.Mailchimp
         Task<ResponseWrapper<MailchimpList>> UpdateList(string listId, MailchimpList list);
         Task<ResponseWrapper<MailchimpMembers>> GetMembersAsync(string listId);
         Task<ResponseWrapper<MailchimpMember>> AddMemberAsync(string listId, MailchimpMember member);
+        Task<ResponseWrapper> DeleteMemberAsync(string listId, string memberId);
     }
 }

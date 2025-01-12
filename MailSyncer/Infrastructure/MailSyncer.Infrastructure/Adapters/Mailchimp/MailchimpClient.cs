@@ -29,5 +29,10 @@ namespace MailSyncer.Infrastructure.Adapters.Mailchimp
         {
             return await PostAsync<MailchimpMember, MailchimpMember>($"lists/{listId}/members", member);
         }
+
+        public async Task<ResponseWrapper> DeleteMemberAsync(string listId, string memberId)
+        {
+            return await DeleteAsync($"lists/{listId}/members/{memberId}");
+        }
     }
 }

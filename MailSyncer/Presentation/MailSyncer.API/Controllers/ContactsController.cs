@@ -26,5 +26,18 @@ namespace MailSyncer.API.Controllers
 
             return Ok(syncResponse);
         }
+
+        [HttpGet("clean")]
+        public async Task<IActionResult> CleanContacts()
+        {
+            var syncResponse = await _contactSyncService.CleanContactsAsync();
+
+            if (syncResponse == null || syncResponse.SyncedContacts == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(syncResponse);
+        }
     }
 }

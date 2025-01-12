@@ -11,3 +11,10 @@ GET {{MailSyncer.API_HostAddress}}/api/contacts/sync
 Accept: application/json
 
 ###
+
+
+
+GET {{MailSyncer.API_HostAddress}}/api/contacts/clean
+Accept: application/json
+
+###

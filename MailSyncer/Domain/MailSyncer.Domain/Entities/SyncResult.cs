@@ -4,6 +4,5 @@
     {
         public List<Contact> SuccessContacts { get; set; } = [];
         public List<Contact> FailedContacts { get; set; } = [];
-        public int SyncedContacts { get; set; }
     }
 }

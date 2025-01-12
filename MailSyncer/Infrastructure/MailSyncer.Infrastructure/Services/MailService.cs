@@ -28,6 +28,7 @@ namespace MailSyncer.Infrastructure.Services
 
                 var mailchimpMember = new MailchimpMember
                 {
+                    Id = string.Empty,
                     EmailAddress = contact.Email,
                     Status = "subscribed", //enum?
                     MergeFields = new MailchimpMergeFields
@@ -58,9 +59,33 @@ namespace MailSyncer.Infrastructure.Services
                 }
             }
 
-            //var members = await _mailchimpClient.GetMembersAsync(listId);
+            return syncContactsResult;
+        }
 
-            syncContactsResult.SyncedContacts = syncContactsResult.SuccessContacts.Count;
+        public async Task<SyncContactsResult> CleanContactsAsync()
+        {
+            var syncContactsResult = new SyncContactsResult();
+
+            string listId = await GetDefaultListId();
+
+            var members = await _mailchimpClient.GetMembersAsync(listId);
+
+            if (members.IsSuccessfulWithData)
+            {
+                foreach (var member in members.Data.Members)
+                {
+                    var deleteResult = await _mailchimpClient.DeleteMemberAsync(listId, member.Id);
+
+                    if (deleteResult.IsSuccessful)
+                    {
+                        syncContactsResult.SuccessContacts.Add(MailchimpMember.Map(member));
+                    }
+                    else
+                    {
+                        syncContactsResult.FailedContacts.Add(MailchimpMember.Map(member));
+                    }
+                }
+            }
 
             return syncContactsResult;
         }
