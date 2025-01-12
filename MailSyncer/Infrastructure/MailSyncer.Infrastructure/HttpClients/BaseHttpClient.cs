@@ -72,7 +72,13 @@ namespace MailSyncer.Infrastructure.HttpClients
             if (response.IsSuccessStatusCode)
             {
                 var jsonData = await response.Content.ReadAsStringAsync();
-                var data = JsonSerializer.Deserialize<T>(jsonData);
+
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                };
+
+                var data = JsonSerializer.Deserialize<T>(jsonData, options);
 
                 if (data == null)
                     return ResponseWrapper<T>.Fail("Response deserialization returned null.");
@@ -101,6 +107,7 @@ namespace MailSyncer.Infrastructure.HttpClients
                 throw new ArgumentNullException(nameof(content));
 
             var json = JsonSerializer.Serialize(content);
+
             return new StringContent(json, Encoding.UTF8, "application/json");
         }
     }

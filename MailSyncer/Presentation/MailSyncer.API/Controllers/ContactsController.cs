@@ -17,8 +17,14 @@ namespace MailSyncer.API.Controllers
         [HttpGet("sync")]
         public async Task<IActionResult> SyncContacts()
         {
-            await _contactSyncService.SyncContactsAsync();
-            return Ok(new { message = "Contacts synced successfully" });
+            var syncResponse = await _contactSyncService.SyncContactsAsync();
+
+            if (syncResponse == null || syncResponse.SyncedContacts == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(syncResponse);
         }
     }
 }

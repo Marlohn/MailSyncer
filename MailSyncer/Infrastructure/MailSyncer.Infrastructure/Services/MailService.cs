@@ -15,44 +15,95 @@ namespace MailSyncer.Infrastructure.Services
             _mailchimpClient = mailchimpClient;
         }
 
-        public async Task AddContactsAsync(IEnumerable<Contact> contacts)
+        public async Task<SyncContactsResult> SyncContactsAsync(IEnumerable<Contact> contacts)
         {
+            var syncContactsResult = new SyncContactsResult();
+
             string listId = await GetDefaultListId();
 
-            foreach (var contact in contacts)
+            foreach (var contact in contacts.Skip(0).Take(2))
             {
-                var member = await _mailchimpClient.AddMemberAsync(listId, new MailchimpMember
+
+                //contact.Validate();?
+
+                var mailchimpMember = new MailchimpMember
                 {
                     EmailAddress = contact.Email,
-                    Status = "subscribed",
+                    Status = "subscribed", //enum?
                     MergeFields = new MailchimpMergeFields
                     {
-                        FNAME = contact.FirstName,
-                        LNAME = contact.LastName
+                        FName = contact.FirstName,
+                        LName = contact.LastName
                     }
-                });
+
+                    //EmailAddress = "example@gmail.com",
+                    //Status = "subscribed", //enum?
+                    //MergeFields = new MailchimpMergeFields
+                    //{
+                    //    FName = "John",
+                    //    LName = "Doe"
+                    //}                    
+
+                };
+
+                var member = await _mailchimpClient.AddMemberAsync(listId, mailchimpMember);
+
+                if (member.IsSuccessfulWithData)
+                {
+                    syncContactsResult.SuccessContacts.Add(contact);
+                }
+                else
+                {
+                    syncContactsResult.FailedContacts.Add(contact);
+                }
             }
+
+            //var members = await _mailchimpClient.GetMembersAsync(listId);
+
+            syncContactsResult.SyncedContacts = syncContactsResult.SuccessContacts.Count;
+
+            return syncContactsResult;
         }
 
         private async Task<string> GetDefaultListId()
         {
-            ListResponse listResponse = await _mailchimpClient.GetLists();
-
-            // Mailchimp's free plan allows only one list and does not permit the removal of the default list
-            MailchimpList defaultList = listResponse.Lists.Single();
+            MailchimpList defaultList = await GetDefaultList();
 
             if (defaultList.Name != _defaultListName)
             {
-                defaultList.Name = _defaultListName;
-                defaultList = await _mailchimpClient.UpdateList(defaultList.Id, defaultList);
-            }
-
-            if (defaultList.Name != _defaultListName)
-            {
-                throw new InvalidOperationException("Failed to set the default list name.");
+                defaultList = await UpdateListToDefaultName(defaultList);
             }
 
             return defaultList.Id;
+        }
+
+        private async Task<MailchimpList> GetDefaultList()
+        {
+            var listsResponse = await _mailchimpClient.GetLists();
+
+            if (!listsResponse.IsSuccessfulWithData)
+            {
+                throw new InvalidOperationException(listsResponse.ErrorMessage);
+            }
+
+            // Mailchimp's free plan allows only one list and does not permit the removal of the default list
+            MailchimpList defaultList = listsResponse.Data.Lists.Single();
+
+            return defaultList;
+        }
+
+        private async Task<MailchimpList> UpdateListToDefaultName(MailchimpList mailchimpList)
+        {
+            mailchimpList.Name = _defaultListName;
+
+            var response = await _mailchimpClient.UpdateList(mailchimpList.Id, mailchimpList);
+
+            if (!response.IsSuccessfulWithData)
+            {
+                throw new InvalidOperationException(response.ErrorMessage);
+            }
+
+            return response.Data;
         }
     }
 }
