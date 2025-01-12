@@ -1,13 +1,18 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
-# Copia os arquivos de projeto e restaura dependências
-COPY *.sln ./
-COPY MailSyncer/* ./MailSyncer/
-RUN dotnet restore
+# Copia os arquivos de solução e os projetos
+COPY MailSyncer.sln ./
+COPY MailSyncer/*.csproj ./MailSyncer/
+
+# Restaura as dependências
+RUN dotnet restore MailSyncer.sln
+
+# Copia o restante dos arquivos do projeto
+COPY MailSyncer/. ./MailSyncer/
 
 # Compila o projeto
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet publish MailSyncer.sln -c Release -o /app/publish
 
 # Cria a imagem final
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
