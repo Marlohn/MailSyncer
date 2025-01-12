@@ -1,26 +1,32 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
 WORKDIR /app
 
-# Copia os arquivos de solução e os projetos
+# Copia o arquivo de solução e os arquivos de projeto (.csproj)
 COPY MailSyncer.sln ./
-COPY MailSyncer/*.csproj ./MailSyncer/
+COPY Application/Application.csproj ./Application/
+COPY Domain/Domain.csproj ./Domain/
+COPY Infrastructure/Infrastructure.csproj ./Infrastructure/
+COPY Mailchimp.Connector/Mailchimp.Connector.csproj ./Mailchimp.Connector/
+COPY Presentation/Presentation.csproj ./Presentation/
+COPY Shared/Shared.csproj ./Shared/
+COPY Tests/Tests.csproj ./Tests/
 
 # Restaura as dependências
-RUN dotnet restore MailSyncer.sln
+RUN dotnet restore
 
-# Copia o restante dos arquivos do projeto
-COPY MailSyncer/. ./MailSyncer/
+# Copia todo o código-fonte restante
+COPY . ./
 
-# Compila o projeto
-RUN dotnet publish MailSyncer.sln -c Release -o /app/publish
+# Publica o projeto principal
+RUN dotnet publish Presentation/Presentation.csproj -c Release -o /app/publish
 
 # Cria a imagem final
 FROM mcr.microsoft.com/dotnet/aspnet:7.0
 WORKDIR /app
 COPY --from=build-env /app/publish .
 
-# Porta exposta
+# Define a porta exposta
 EXPOSE 5000
 
-# Comando para rodar o app
-ENTRYPOINT ["dotnet", "MailSyncer.dll"]
+# Define o ponto de entrada
+ENTRYPOINT ["dotnet", "Presentation.dll"]
