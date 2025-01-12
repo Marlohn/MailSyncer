@@ -62,6 +62,25 @@ namespace MailSyncer.Infrastructure.Services
             return syncContactsResult;
         }
 
+        public async Task<SyncContactsResult> GetContactsAsync()
+        {
+            var syncContactsResult = new SyncContactsResult();
+
+            string listId = await GetDefaultListId();
+
+            var members = await _mailchimpClient.GetMembersAsync(listId);
+
+            if (members.IsSuccessfulWithData)
+            {
+                foreach (var member in members.Data.Members)
+                {
+                    syncContactsResult.SuccessContacts.Add(MailchimpMember.Map(member));
+                }
+            }
+
+            return syncContactsResult;
+        }
+
         public async Task<SyncContactsResult> CleanContactsAsync()
         {
             var syncContactsResult = new SyncContactsResult();

@@ -28,6 +28,17 @@ namespace MailSyncer.Application.Services
             };
         }
 
+        public async Task<SyncResponseDto> GetContactsAsync()
+        {
+            var result = await _mailService.GetContactsAsync();
+
+            return new SyncResponseDto
+            {
+                SyncedContacts = result.SuccessContacts.Count,
+                Contacts = result.SuccessContacts.Select(ContactDTO.Map).ToList()
+            };
+        }
+
         public async Task<SyncResponseDto> CleanContactsAsync()
         {
             var result = await _mailService.CleanContactsAsync();

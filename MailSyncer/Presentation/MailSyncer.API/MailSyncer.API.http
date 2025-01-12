@@ -6,12 +6,16 @@ Accept: application/json
 ###
 
 
-
 GET {{MailSyncer.API_HostAddress}}/api/contacts/sync
 Accept: application/json
 
 ###
 
+
+GET {{MailSyncer.API_HostAddress}}/api/contacts/get
+Accept: application/json
+
+###
 
 
 GET {{MailSyncer.API_HostAddress}}/api/contacts/clean

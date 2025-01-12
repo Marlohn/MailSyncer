@@ -5,6 +5,7 @@ namespace MailSyncer.Application.Interfaces
     public interface IContactSyncService
     {
         Task<SyncResponseDto> SyncContactsAsync();
+        Task<SyncResponseDto> GetContactsAsync();
         Task<SyncResponseDto> CleanContactsAsync();
     }
 }
