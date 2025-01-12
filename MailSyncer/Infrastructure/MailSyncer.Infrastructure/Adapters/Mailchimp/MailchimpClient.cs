@@ -22,7 +22,7 @@ namespace MailSyncer.Infrastructure.Adapters.Mailchimp
 
         public async Task<ResponseWrapper<MailchimpMembers>> GetMembersAsync(string listId)
         {
-            return await GetAsync<MailchimpMembers>($"lists/{listId}/members");
+            return await GetAsync<MailchimpMembers>($"lists/{listId}/members?count=1000");
         }
 
         public async Task<ResponseWrapper<MailchimpMember>> AddMemberAsync(string listId, MailchimpMember member)
