@@ -23,27 +23,18 @@ namespace MailSyncer.Infrastructure.Services
 
             string listId = await GetDefaultListId();
 
-            foreach (var contact in contacts.Skip(0).Take(2))
+            foreach (var contact in contacts)
             {
                 var mailchimpMember = new MailchimpMember
                 {
                     Id = string.Empty,
                     EmailAddress = contact.Email,
-                    Status = "subscribed", //enum?
+                    Status = "subscribed",
                     MergeFields = new MailchimpMergeFields
                     {
                         FName = contact.FirstName,
                         LName = contact.LastName
                     }
-
-                    //EmailAddress = "example@gmail.com",
-                    //Status = "subscribed", //enum?
-                    //MergeFields = new MailchimpMergeFields
-                    //{
-                    //    FName = "John",
-                    //    LName = "Doe"
-                    //}                    
-
                 };
 
                 var member = await _mailchimpClient.AddMemberAsync(listId, mailchimpMember);
