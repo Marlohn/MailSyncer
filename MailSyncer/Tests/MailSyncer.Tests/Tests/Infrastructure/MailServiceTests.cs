@@ -132,6 +132,45 @@ namespace MailSyncer.UnitTests.Tests.Infrastructure
         }
 
         [Fact]
+        public async Task CleanContactsAsync_ShouldHandleFailedDeletionFromMailchimp()
+        {
+            // Arrange
+            var mailchimpMembers = new MailchimpMembers
+            {
+                Members = new List<MailchimpMember>
+                {
+                    new MailchimpMember
+                    {
+                        Id = "1",
+                        EmailAddress = "john.doe@example.com",
+                        Status = "subscribed",
+                        MergeFields = new MailchimpMergeFields { FName = "John", LName = "Doe" }
+                    }
+                }
+            };
+
+            _mailchimpClientMock.Setup(x => x.GetLists())
+                .ReturnsAsync(ResponseWrapper<MailchimpLists>.Success(new MailchimpLists
+                {
+                    Lists = new List<MailchimpList> { new MailchimpList { Id = DefaultListId, Name = DefaultListName } }
+                }));
+
+            _mailchimpClientMock.Setup(x => x.GetMembersAsync(DefaultListId))
+                .ReturnsAsync(ResponseWrapper<MailchimpMembers>.Success(mailchimpMembers));
+
+            _mailchimpClientMock.Setup(x => x.DeleteMemberAsync(DefaultListId, "1"))
+                .ReturnsAsync(ResponseWrapper.Fail("Failed to delete member from Mailchimp."));
+
+            // Act
+            var result = await _mailService.CleanContactsAsync();
+
+            // Assert
+            Assert.Empty(result.SuccessContacts);
+            Assert.Single(result.FailedContacts);
+            Assert.Equal("john.doe@example.com", result.FailedContacts[0].Email);
+        }
+
+        [Fact]
         public async Task SyncContactsAsync_ShouldHandleFailureToAddContactsToMailchimp()
         {
             // Arrange
