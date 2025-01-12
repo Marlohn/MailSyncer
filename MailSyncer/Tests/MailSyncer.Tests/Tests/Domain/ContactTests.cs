@@ -1,7 +1,7 @@
 ﻿using MailSyncer.Domain.Entities;
-using MailSyncer.Tests.Faker;
+using MailSyncer.UnitTests.Faker;
 
-namespace MailSyncer.Tests.Tests.Domain
+namespace MailSyncer.UnitTests.Tests.Domain
 {
     public class ContactTests
     {

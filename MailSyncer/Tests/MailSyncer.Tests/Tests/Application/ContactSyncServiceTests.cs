@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 using MailSyncer.Application.Services;
 using MailSyncer.Domain.Entities;
 using MailSyncer.Domain.Interfaces;
-using MailSyncer.Tests.Faker;
+using MailSyncer.UnitTests.Faker;
 using Moq;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace MailSyncer.Tests.Tests.Application
+namespace MailSyncer.UnitTests.Tests.Application
 {
     public class ContactSyncServiceTests
     {

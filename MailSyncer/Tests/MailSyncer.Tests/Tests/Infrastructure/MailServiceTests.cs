@@ -2,10 +2,10 @@
 using MailSyncer.Infrastructure.Adapters.Mailchimp.Models;
 using MailSyncer.Infrastructure.HttpClients.Models;
 using MailSyncer.Infrastructure.Services;
-using MailSyncer.Tests.Faker;
+using MailSyncer.UnitTests.Faker;
 using Moq;
 
-namespace MailSyncer.Tests.Tests.Infrastructure
+namespace MailSyncer.UnitTests.Tests.Infrastructure
 {
     public class MailServiceTests
     {

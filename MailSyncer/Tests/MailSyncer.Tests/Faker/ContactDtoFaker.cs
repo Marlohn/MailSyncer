@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using MailSyncer.Application.Dtos;
 
-namespace MailSyncer.Tests.Faker
+namespace MailSyncer.UnitTests.Faker
 {
     public static class ContactDtoFaker
     {

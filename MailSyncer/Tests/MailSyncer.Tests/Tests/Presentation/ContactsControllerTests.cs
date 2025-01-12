@@ -1,11 +1,11 @@
 ﻿using MailSyncer.API.Controllers;
 using MailSyncer.Application.Dtos;
 using MailSyncer.Application.Interfaces;
-using MailSyncer.Tests.Faker;
+using MailSyncer.UnitTests.Faker;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
-namespace MailSyncer.Tests.Tests.Presentation
+namespace MailSyncer.UnitTests.Tests.Presentation
 {
     public class ContactsControllerTests
     {

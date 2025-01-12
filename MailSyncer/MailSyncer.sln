@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E9F5125B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Shared", "Shared\MailSyncer.Shared\MailSyncer.Shared.csproj", "{B5DE078D-4A8C-4C99-96B4-4BBD72398786}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.Tests", "Tests\MailSyncer.Tests\MailSyncer.Tests.csproj", "{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailSyncer.UnitTests", "Tests\MailSyncer.Tests\MailSyncer.UnitTests.csproj", "{09E52B26-2A3A-43C1-8CD0-04DB6EF3AF91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
