@@ -143,5 +143,19 @@ namespace MailSyncer.UnitTests.Tests.Presentation
             // Assert
             Assert.IsType<NoContentResult>(result);
         }
+
+        [Fact]
+        public async Task SyncContacts_ShouldThrowException_AndBeHandledByMiddleware()
+        {
+            // Arrange
+            var exceptionMessage = "Test exception";
+            _contactSyncServiceMock.Setup(s => s.SyncContactsAsync()).ThrowsAsync(new Exception(exceptionMessage));
+
+            // Act
+            var exception = await Assert.ThrowsAsync<Exception>(_controller.SyncContacts);
+
+            // Assert
+            Assert.Equal(exceptionMessage, exception.Message);
+        }
     }
 }

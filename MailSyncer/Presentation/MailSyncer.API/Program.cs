@@ -1,3 +1,4 @@
+using MailSyncer.API.Middlewares;
 using MailSyncer.IoC;
 
 namespace MailSyncer.API
@@ -17,6 +18,8 @@ namespace MailSyncer.API
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
