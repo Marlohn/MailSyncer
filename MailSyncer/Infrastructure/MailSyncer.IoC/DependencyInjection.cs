@@ -3,9 +3,12 @@ using MailSyncer.Application.Interfaces;
 using MailSyncer.Application.Services;
 using MailSyncer.Domain.Interfaces;
 using MailSyncer.Infrastructure.Adapters.Mailchimp;
+using MailSyncer.Infrastructure.Adapters.Mailchimp.Settings;
 using MailSyncer.Infrastructure.Adapters.MockApi;
+using MailSyncer.Infrastructure.HttpClients.Settings;
 using MailSyncer.Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace MailSyncer.IoC
 {
@@ -29,6 +32,9 @@ namespace MailSyncer.IoC
 
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<MailchimpSettings>>().Value);
+            services.AddSingleton(sp => sp.GetRequiredService<IOptions<MockApiSettings>>().Value);
+
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IMailService, MailService>();
 
@@ -37,28 +43,19 @@ namespace MailSyncer.IoC
 
         public static IServiceCollection AddHttpClients(this IServiceCollection services)
         {
-            services.AddHttpClient<IMockApiClient, MockApiClient>(client =>
+            services.AddHttpClient<IMockApiClient, MockApiClient>((provider, client) =>
             {
-                client.BaseAddress = new Uri("https://challenge.trio.dev/api/v1/");
-                //client.Timeout = TimeSpan.FromSeconds(30);
+                var settings = provider.GetRequiredService<IOptions<MockApiSettings>>().Value;
+                client.BaseAddress = new Uri(settings.BaseUrl);
             });
 
-            services.AddHttpClient<IMailchimpClient, MailchimpClient>(client =>
+            services.AddHttpClient<IMailchimpClient, MailchimpClient>((provider, client) =>
             {
-                client.BaseAddress = new Uri("https://us8.api.mailchimp.com/3.0/");
-                //client.Timeout = TimeSpan.FromSeconds(30);
+                var settings = provider.GetRequiredService<IOptions<MailchimpSettings>>().Value;
+                client.BaseAddress = new Uri(settings.BaseUrl);
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Bearer", "55c35dbdbe8a26cd71df9245ee3ad54b-us8");
+                    new AuthenticationHeaderValue("Bearer", settings.ApiKey);
             });
-
-
-            //services.AddHttpClient<IMailService, MailchimpService>(client =>
-            //{
-            //    client.BaseAddress = new Uri("https://us8.api.mailchimp.com/3.0/");
-            //    client.DefaultRequestHeaders.Authorization =
-            //        new AuthenticationHeaderValue("Bearer", "55c35dbdbe8a26cd71df9245ee3ad54b-us8");
-            //    //client.Timeout = TimeSpan.FromSeconds(30);
-            //});
 
             return services;
         }

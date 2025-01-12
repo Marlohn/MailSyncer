@@ -2,17 +2,19 @@
 using MailSyncer.Domain.Interfaces;
 using MailSyncer.Infrastructure.Adapters.Mailchimp;
 using MailSyncer.Infrastructure.Adapters.Mailchimp.Models;
+using MailSyncer.Infrastructure.Adapters.Mailchimp.Settings;
 
 namespace MailSyncer.Infrastructure.Services
 {
     public class MailService : IMailService
     {
         private readonly IMailchimpClient _mailchimpClient;
-        private readonly string _defaultListName = "MARLOHN CHOINSKI";
+        private readonly MailchimpSettings _mailchimpSettings;
 
-        public MailService(IMailchimpClient mailchimpClient)
+        public MailService(IMailchimpClient mailchimpClient, MailchimpSettings mailchimpSettings)
         {
             _mailchimpClient = mailchimpClient;
+            _mailchimpSettings = mailchimpSettings ?? throw new ArgumentNullException(nameof(mailchimpSettings), "Mailchimp settings cannot be null.");
         }
 
         public async Task<SyncContactsResult> SyncContactsAsync(List<Contact> contacts)
@@ -110,7 +112,7 @@ namespace MailSyncer.Infrastructure.Services
         {
             MailchimpList defaultList = await GetDefaultList();
 
-            if (defaultList.Name != _defaultListName)
+            if (defaultList.Name != _mailchimpSettings.DefaultListName)
             {
                 defaultList = await UpdateListToDefaultName(defaultList);
             }
@@ -135,7 +137,7 @@ namespace MailSyncer.Infrastructure.Services
 
         private async Task<MailchimpList> UpdateListToDefaultName(MailchimpList mailchimpList)
         {
-            mailchimpList.Name = _defaultListName;
+            mailchimpList.Name = _mailchimpSettings.DefaultListName;
 
             var response = await _mailchimpClient.UpdateList(mailchimpList.Id, mailchimpList);
 
