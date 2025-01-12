@@ -4,6 +4,6 @@ namespace MailSyncer.Domain.Interfaces
 {
     public interface IContactService
     {
-        Task<IEnumerable<Contact>> GetContactsAsync();
+        Task<List<Contact>> GetContactsAsync();
     }
 }

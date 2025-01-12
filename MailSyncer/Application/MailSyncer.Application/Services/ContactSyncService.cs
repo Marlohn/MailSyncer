@@ -1,5 +1,7 @@
-﻿using MailSyncer.Application.Dtos;
+﻿using System.ComponentModel.DataAnnotations;
+using MailSyncer.Application.Dtos;
 using MailSyncer.Application.Interfaces;
+using MailSyncer.Domain.Entities;
 using MailSyncer.Domain.Interfaces;
 
 namespace MailSyncer.Application.Services
@@ -17,9 +19,12 @@ namespace MailSyncer.Application.Services
 
         public async Task<SyncResponseDto> SyncContactsAsync()
         {
-            var contacts = await _contactService.GetContactsAsync();
+            List<Contact> validContacts = await GetValidContacts();
 
-            var result = await _mailService.SyncContactsAsync(contacts);
+            if (validContacts.Count == 0)
+                return new SyncResponseDto();
+
+            SyncContactsResult result = await _mailService.SyncContactsAsync(validContacts);
 
             return new SyncResponseDto
             {
@@ -30,7 +35,7 @@ namespace MailSyncer.Application.Services
 
         public async Task<SyncResponseDto> GetContactsAsync()
         {
-            var result = await _mailService.GetContactsAsync();
+            SyncContactsResult result = await _mailService.GetContactsAsync();
 
             return new SyncResponseDto
             {
@@ -41,13 +46,37 @@ namespace MailSyncer.Application.Services
 
         public async Task<SyncResponseDto> CleanContactsAsync()
         {
-            var result = await _mailService.CleanContactsAsync();
+            SyncContactsResult result = await _mailService.CleanContactsAsync();
 
             return new SyncResponseDto
             {
                 SyncedContacts = result.SuccessContacts.Count,
                 Contacts = result.SuccessContacts.Select(ContactDTO.Map).ToList()
             };
+        }
+
+        private async Task<List<Contact>> GetValidContacts()
+        {
+            var contacts = await _contactService.GetContactsAsync();
+
+            var validContacts = new List<Contact>();
+
+            foreach (var contact in contacts)
+            {
+                var validationResult = Contact.Validate(contact);
+
+                if (validationResult.IsValid)
+                {
+                    validContacts.Add(contact);
+                }
+                else
+                {
+                    // TODO: Log the errors and allow the process to continue without interruption or find a way to return the errors to api
+                    throw new ValidationException($"Invalid contact: {contact.Email}. Errors: {string.Join(", ", validationResult.Errors)}");
+                }
+            }
+
+            return validContacts;
         }
     }
 }

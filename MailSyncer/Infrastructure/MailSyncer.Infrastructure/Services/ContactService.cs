@@ -13,7 +13,7 @@ namespace MailSyncer.Infrastructure.Services
             _mockApiClient = mockApiClient;
         }
 
-        public async Task<IEnumerable<Contact>> GetContactsAsync()
+        public async Task<List<Contact>> GetContactsAsync()
         {
             var response = await _mockApiClient.GetContactsAsync();
 

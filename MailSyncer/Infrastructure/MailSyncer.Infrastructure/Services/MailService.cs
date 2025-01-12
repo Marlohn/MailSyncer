@@ -15,7 +15,7 @@ namespace MailSyncer.Infrastructure.Services
             _mailchimpClient = mailchimpClient;
         }
 
-        public async Task<SyncContactsResult> SyncContactsAsync(IEnumerable<Contact> contacts)
+        public async Task<SyncContactsResult> SyncContactsAsync(List<Contact> contacts)
         {
             var syncContactsResult = new SyncContactsResult();
 
@@ -23,9 +23,6 @@ namespace MailSyncer.Infrastructure.Services
 
             foreach (var contact in contacts.Skip(0).Take(2))
             {
-
-                //contact.Validate();?
-
                 var mailchimpMember = new MailchimpMember
                 {
                     Id = string.Empty,

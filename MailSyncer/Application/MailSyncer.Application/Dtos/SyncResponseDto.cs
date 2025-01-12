@@ -3,6 +3,6 @@
     public class SyncResponseDto
     {
         public int SyncedContacts { get; set; }
-        public List<ContactDTO> Contacts { get; set; }
+        public List<ContactDTO> Contacts { get; set; } = [];
     }
 }
