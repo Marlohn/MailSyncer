@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using MailSyncer.Application.Services;
 using MailSyncer.Domain.Entities;
 using MailSyncer.Domain.Interfaces;
 using MailSyncer.Tests.Faker;
 using Moq;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace MailSyncer.Tests.Tests.Application
 {
@@ -66,10 +69,12 @@ namespace MailSyncer.Tests.Tests.Application
         public async Task SyncContactsAsync_ShouldHandleExceptionsFromContactService()
         {
             // Arrange
-            _contactServiceMock.Setup(cs => cs.GetContactsAsync()).ThrowsAsync(new Exception("Service error"));
+            string errorMessage = "Service error";
+            _contactServiceMock.Setup(cs => cs.GetContactsAsync()).ThrowsAsync(new Exception(errorMessage));
 
             // Act & Assert
-            await Assert.ThrowsAsync<Exception>(_contactSyncService.SyncContactsAsync);
+            var exception = await Assert.ThrowsAsync<Exception>(_contactSyncService.SyncContactsAsync);
+            Assert.Equal(errorMessage, exception.Message);
         }
 
         [Fact]
@@ -91,8 +96,9 @@ namespace MailSyncer.Tests.Tests.Application
             _mailServiceMock.Setup(ms => ms.SyncContactsAsync(It.IsAny<List<Contact>>())).ReturnsAsync(syncResult);
 
             // Act & Assert
-            await Assert.ThrowsAsync<ValidationException>(_contactSyncService.SyncContactsAsync);
-
+            var exception = await Assert.ThrowsAsync<ValidationException>(_contactSyncService.SyncContactsAsync);
+            Assert.NotNull(exception.Message);
+            Assert.NotEmpty(exception.Message);
         }
 
         [Fact]
