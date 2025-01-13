@@ -1,7 +1,13 @@
+using System.Text;
 using MailSyncer.API.Middlewares;
 using MailSyncer.Infrastructure.Adapters.Mailchimp.Settings;
 using MailSyncer.Infrastructure.HttpClients.Settings;
 using MailSyncer.IoC;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 namespace MailSyncer.API
@@ -12,14 +18,10 @@ namespace MailSyncer.API
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddOpenApi();
-
-            // Register settings
-            builder.Services.Configure<MailchimpSettings>(builder.Configuration.GetSection("Mailchimp"));
-            builder.Services.Configure<MockApiSettings>(builder.Configuration.GetSection("MockApi"));
+            builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
 
             // Add services to the container.
-
-            builder.Services.AddDependencies();
+            builder.Services.AddDependencies(builder.Configuration);
 
             builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -43,13 +45,36 @@ namespace MailSyncer.API
             });
 
             app.MapOpenApi();
-            app.MapScalarApiReference();
+            //app.MapScalarApiReference(options =>
+            //{
+            //    options.WithTheme(ScalarTheme.Moon)
+            //        .WithDarkMode(true)             // Modo escuro ativado
+            //        .WithDarkModeToggle(false)      // Oculta a alternância de modo escuro
+            //        .WithPreferredScheme("Bearer")  // Define "Bearer" como esquema preferido
+            //        .WithHttpBearerAuthentication(bearer =>
+            //        {
+            //            bearer.Token = "your-bearer-token"; // Aqui você pode configurar um token estático ou um dinâmico
+            //        });
+
+            //    options.Authentication = new ScalarAuthenticationOptions
+            //    {
+            //        PreferredSecurityScheme = "Bearer" // Esquema de segurança preferido
+            //    };
+            //});
+
+            app.MapScalarApiReference(option => {
+                option
+                    .WithTitle("Auth API")
+                    .WithTheme(ScalarTheme.DeepSpace)
+                    .WithDownloadButton(true)
+                    .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+            });
 
 
-            app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHttpsRedirection();
 
             app.MapControllers();
 

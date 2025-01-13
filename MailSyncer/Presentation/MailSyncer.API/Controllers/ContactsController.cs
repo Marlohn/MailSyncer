@@ -1,9 +1,11 @@
 ﻿using MailSyncer.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MailSyncer.API.Controllers
 {
     [ApiController]
+    //[Authorize]
     [Route("api/[controller]")]
     public class ContactsController : Controller
     {
@@ -28,6 +30,7 @@ namespace MailSyncer.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetContacts()
         {
             var syncResponse = await _contactSyncService.GetContactsAsync();

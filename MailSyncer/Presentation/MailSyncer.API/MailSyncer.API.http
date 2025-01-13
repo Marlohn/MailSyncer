@@ -1,13 +1,25 @@
 @MailSyncer.API_HostAddress = http://localhost:5200
 
+POST {{MailSyncer.API_HostAddress}}/api/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "admin",
+    "password": "password"
+}
+
+###
 
 POST {{MailSyncer.API_HostAddress}}/api/contacts/sync
 Accept: application/json
+Beaver: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTczNjc3NTA4NiwiaXNzIjoiTWFpbFN5bmNlciIsImF1ZCI6Ik1haWxTeW5jZXJBcGkifQ._Xyrnwv-DNDSupmgh3m1gKjw9odeaLs_EZu79I8piqo
 
 ###
 
 GET {{MailSyncer.API_HostAddress}}/api/contacts
 Accept: application/json
+Beaver: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTczNjc3NTA4NiwiaXNzIjoiTWFpbFN5bmNlciIsImF1ZCI6Ik1haWxTeW5jZXJBcGkifQ._Xyrnwv-DNDSupmgh3m1gKjw9odeaLs_EZu79I8piqo
 
 ###
 
